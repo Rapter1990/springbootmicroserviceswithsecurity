@@ -10,6 +10,9 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
+/**
+ * Base class named {@link BaseDomainModel} for domain models with common audit fields.
+ */
 @Getter
 @Setter
 @SuperBuilder

@@ -10,6 +10,10 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
+/**
+ * Base entity class named {@link BaseEntity} with common fields for audit tracking and lifecycle management.
+ * Provides automatic population of audit fields using JPA lifecycle annotations.
+ */
 @Getter
 @Setter
 @SuperBuilder
