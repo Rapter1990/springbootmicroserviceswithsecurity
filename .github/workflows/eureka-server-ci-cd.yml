@@ -58,6 +58,6 @@ jobs:
           tags: latest
           registry: docker.io
           dockerfile: eurekaserver/Dockerfile
-          context: eurekaserver
+          directory: eurekaserver
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
