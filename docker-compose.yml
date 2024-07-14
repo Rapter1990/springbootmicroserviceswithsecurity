@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  eurekaserver:
+    image: eurekaserver:latest
+    build:
+      context: ./eurekaserver
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    networks:
+      - springbootmicroservicesnetwork
+
+
+networks:
+  springbootmicroservicesnetwork:
+    driver: bridge
