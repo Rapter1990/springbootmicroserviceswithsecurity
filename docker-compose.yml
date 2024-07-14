@@ -8,6 +8,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8761:8761"
+    environment:
+      - SPRING_APPLICATION_NAME=eurekaserver
+      - EUREKA_INSTANCE_HOSTNAME=localhost
+      - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
+      - EUREKA_CLIENT_FETCH_REGISTRY=false
+      - SERVER_PORT=8761
     networks:
       - springbootmicroservicesnetwork
 
