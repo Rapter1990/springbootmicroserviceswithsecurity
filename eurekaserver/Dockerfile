@@ -20,7 +20,7 @@ WORKDIR eurekaserver
 # Copy the JAR file from the build stage
 COPY --from=build target/*.jar eurekaserver.jar
 
-# Expose port 1225
+# Expose port 8761
 EXPOSE 8761
 
 # Set the entrypoint command for running the application
