@@ -17,6 +17,22 @@ services:
     networks:
       - springbootmicroservicesnetwork
 
+  commonservice:
+    image: commonservice:latest
+    build:
+      context: ./commonservice
+      dockerfile: Dockerfile
+    ports:
+      - "1111:1111"
+    environment:
+      - SPRING_APPLICATION_NAME=commonservice
+      - SPRING_CLOUD_NETFLIX_EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eurekaserver:8761/eureka/
+      - SERVER_PORT=1111
+    depends_on:
+      - eurekaserver
+    networks:
+      - springbootmicroservicesnetwork
+
 
 networks:
   springbootmicroservicesnetwork:
