@@ -34,3 +34,6 @@ build/
 
 ### Environment file
 .env
+
+### db folder
+/db
