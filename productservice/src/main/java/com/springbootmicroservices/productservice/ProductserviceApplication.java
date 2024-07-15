@@ -7,11 +7,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 /**
  * The entry point for the Commonservice Spring Boot application.
  * This application is a Eureka client that registers itself with a Eureka server.
- * The application is configured with the {@link SpringBootApplication} annotation
- * and enabled as a Eureka client with the {@link EnableDiscoveryClient} annotation.
+ * The application is configured with the {@link SpringBootApplication} annotation.
  */
 @SpringBootApplication
-@EnableDiscoveryClient
 public class ProductserviceApplication {
 
 	/**
