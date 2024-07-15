@@ -43,6 +43,22 @@ services:
     networks:
       - springbootmicroservicesnetwork
 
+  apigateway:
+    image: apigateway:latest
+    build:
+      context: ./apigateway
+      dockerfile: Dockerfile
+    ports:
+      - "1110:1110"
+    environment:
+      - SPRING_APPLICATION_NAME=apigateway
+      - EUREKA_SERVICE_URL=http://eurekaserver:8761/eureka/
+    depends_on:
+      eurekaserver:
+        condition: service_started
+    networks:
+      - springbootmicroservicesnetwork
+
   productservice:
     image: productservice:latest
     build:
