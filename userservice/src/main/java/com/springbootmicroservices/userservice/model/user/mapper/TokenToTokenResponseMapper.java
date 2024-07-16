@@ -1,8 +1,8 @@
-package com.springbootmicroservices.authservice.model.auth.mapper;
+package com.springbootmicroservices.userservice.model.user.mapper;
 
-import com.springbootmicroservices.authservice.model.auth.Token;
-import com.springbootmicroservices.authservice.model.auth.dto.response.TokenResponse;
-import com.springbootmicroservices.authservice.model.common.mapper.BaseMapper;
+import com.springbootmicroservices.userservice.model.common.mapper.BaseMapper;
+import com.springbootmicroservices.userservice.model.user.Token;
+import com.springbootmicroservices.userservice.model.user.dto.response.TokenResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
