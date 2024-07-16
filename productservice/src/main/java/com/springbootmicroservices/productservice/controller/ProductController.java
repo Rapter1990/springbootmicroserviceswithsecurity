@@ -17,6 +17,7 @@ import com.springbootmicroservices.productservice.service.ProductUpdateService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.UUID;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,7 @@ public class ProductController {
             CustomPageToCustomPagingResponseMapper.initialize();
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public CustomResponse<String> createProduct(@RequestBody @Valid final ProductCreateRequest productCreateRequest) {
 
         final Product createdProduct = productCreateService
@@ -46,6 +48,7 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public CustomResponse<ProductResponse> getProductById(@PathVariable @UUID final String productId) {
 
         final Product product = productReadService.getProductById(productId);
@@ -57,6 +60,7 @@ public class ProductController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public CustomResponse<CustomPagingResponse<ProductResponse>> getProducts(
             @RequestBody @Valid final ProductPagingRequest productPagingRequest) {
 
@@ -70,6 +74,7 @@ public class ProductController {
     }
 
     @PutMapping("/{productId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public CustomResponse<ProductResponse> updatedProductById(
             @RequestBody @Valid final ProductUpdateRequest productUpdateRequest,
             @PathVariable @UUID final String productId) {
@@ -82,6 +87,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{productId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public CustomResponse<Void> deleteProductById(@PathVariable @UUID final String productId) {
 
         productDeleteService.deleteProductById(productId);

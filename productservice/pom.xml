@@ -125,6 +125,30 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- SPRING SECURITY DEPENDENCY -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<!-- SPRING SECURITY DEPENDENCY -->
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+
+		<!-- SPRING OAUTH2 CLIENT DEPENDENCY -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+		</dependency>
+		<!-- SPRING OAUTH2 CLIENT DEPENDENCY -->
+
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
