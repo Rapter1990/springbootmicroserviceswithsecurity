@@ -2,6 +2,7 @@ package com.springbootmicroservices.apigateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * The entry point for the API Gateway Spring Boot application.
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * The application is configured with the {@link SpringBootApplication} annotation.
  */
 @SpringBootApplication
+@EnableFeignClients
 public class ApigatewayApplication {
 
 	/**

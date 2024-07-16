@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: authservice
+server:
+  port: 1112
