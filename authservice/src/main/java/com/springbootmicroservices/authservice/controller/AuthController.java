@@ -1,6 +1,5 @@
 package com.springbootmicroservices.authservice.controller;
 
-import com.springbootmicroservices.authservice.model.auth.Token;
 import com.springbootmicroservices.authservice.model.auth.dto.request.LoginRequest;
 import com.springbootmicroservices.authservice.model.auth.dto.request.RegisterRequest;
 import com.springbootmicroservices.authservice.model.auth.dto.request.TokenInvalidateRequest;

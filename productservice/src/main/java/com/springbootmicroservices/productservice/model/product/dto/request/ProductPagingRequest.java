@@ -1,7 +1,9 @@
 package com.springbootmicroservices.productservice.model.product.dto.request;
 
 import com.springbootmicroservices.productservice.model.common.dto.request.CustomPagingRequest;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 /**

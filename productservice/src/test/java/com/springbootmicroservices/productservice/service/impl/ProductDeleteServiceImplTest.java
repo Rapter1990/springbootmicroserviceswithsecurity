@@ -1,7 +1,5 @@
 package com.springbootmicroservices.productservice.service.impl;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.springbootmicroservices.productservice.base.AbstractBaseServiceTest;
 import com.springbootmicroservices.productservice.exception.ProductNotFoundException;
 import com.springbootmicroservices.productservice.model.product.entity.ProductEntity;
@@ -12,7 +10,7 @@ import org.mockito.Mock;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class ProductDeleteServiceImplTest extends AbstractBaseServiceTest {

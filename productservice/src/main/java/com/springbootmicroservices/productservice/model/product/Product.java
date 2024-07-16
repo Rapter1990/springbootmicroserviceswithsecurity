@@ -1,11 +1,7 @@
 package com.springbootmicroservices.productservice.model.product;
 
 import com.springbootmicroservices.productservice.model.common.BaseDomainModel;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;

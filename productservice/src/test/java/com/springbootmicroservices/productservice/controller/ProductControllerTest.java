@@ -19,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -31,7 +32,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -52,7 +52,7 @@ class ProductControllerTest extends AbstractRestControllerTest {
     private final ProductToProductResponseMapper productToProductResponseMapper = ProductToProductResponseMapper.initialize();
 
     @Test
-    void givenProductCreateRequest_whenProductCreated_thenReturnCustomResponseWithProductId() throws Exception {
+    void givenProductCreateRequest_whenProductCreatedFromAdmin_thenReturnCustomResponseWithProductId() throws Exception {
 
         // Given
         String productName = "Test Product";
@@ -76,7 +76,8 @@ class ProductControllerTest extends AbstractRestControllerTest {
         // Then
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/products")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(productCreateRequest)))
+                        .content(objectMapper.writeValueAsString(productCreateRequest))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + mockAdminToken.getAccessToken()))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.httpStatus").value("OK"))
@@ -89,7 +90,7 @@ class ProductControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    void givenProductId_whenGetProductById_thenReturnProductResponse() throws Exception {
+    void givenProductId_whenGetProductByIdFromAdmin_thenReturnProductResponse() throws Exception {
 
         // Given
         String productId = UUID.randomUUID().toString();
@@ -108,7 +109,44 @@ class ProductControllerTest extends AbstractRestControllerTest {
 
         // Then
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/products/{productId}", productId)
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + mockAdminToken.getAccessToken()))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.httpStatus").value("OK"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.isSuccess").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.id").value(productResponse.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.name").value(productResponse.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.amount").value(productResponse.getAmount()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.unitPrice").value(productResponse.getUnitPrice()));
+
+        // Verify
+        verify(productReadService, times(1)).getProductById(productId);
+
+    }
+
+    @Test
+    void givenProductId_whenGetProductByIdFromUser_thenReturnProductResponse() throws Exception {
+
+        // Given
+        String productId = UUID.randomUUID().toString();
+
+        Product expected = Product.builder()
+                .id(productId)
+                .name("Test Product")
+                .unitPrice(BigDecimal.valueOf(12))
+                .amount(BigDecimal.valueOf(5))
+                .build();
+
+        ProductResponse productResponse = productToProductResponseMapper.map(expected);
+
+        // When
+        when(productReadService.getProductById(productId)).thenReturn(expected);
+
+        // Then
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/products/{productId}", productId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + mockUserToken.getAccessToken()))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.httpStatus").value("OK"))
@@ -125,7 +163,7 @@ class ProductControllerTest extends AbstractRestControllerTest {
 
 
     @Test
-    void givenProductPagingRequest_whenGetProducts_thenReturnCustomPageProduct() throws Exception {
+    void givenProductPagingRequest_whenGetProductsFromAdmin_thenReturnCustomPageProduct() throws Exception {
 
         // Given
         ProductPagingRequest pagingRequest = ProductPagingRequest.builder()
@@ -162,7 +200,8 @@ class ProductControllerTest extends AbstractRestControllerTest {
         // Then
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/products")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(pagingRequest)))
+                        .content(objectMapper.writeValueAsString(pagingRequest))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + mockAdminToken.getAccessToken()))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.httpStatus").value("OK"))
@@ -178,7 +217,61 @@ class ProductControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    void givenProductUpdateRequest_WhenUpdateProductBy_thenReturnUpdatedProduct() throws Exception {
+    void givenProductPagingRequest_whenGetProductsFromUser_thenReturnCustomPageProduct() throws Exception {
+
+        // Given
+        ProductPagingRequest pagingRequest = ProductPagingRequest.builder()
+                .pagination(
+                        CustomPaging.builder()
+                                .pageSize(1)
+                                .pageNumber(1)
+                                .build()
+                ).build();
+
+        String productId = UUID.randomUUID().toString();
+
+        ProductEntity expected = ProductEntity.builder()
+                .id(productId)
+                .name("Test Product")
+                .unitPrice(BigDecimal.valueOf(12))
+                .amount(BigDecimal.valueOf(5))
+                .build();
+
+        List<ProductEntity> productEntities = new ArrayList<>();
+        productEntities.addAll(Collections.singletonList(expected));
+
+        Page<ProductEntity> productEntityPage = new PageImpl<>(productEntities, PageRequest.of(1, 1), productEntities.size());
+
+        List<Product> productDomainModels = productEntities.stream()
+                .map(entity -> new Product(entity.getId(), entity.getName(), entity.getAmount(),entity.getUnitPrice()))
+                .collect(Collectors.toList());
+
+        CustomPage<Product> productPage = CustomPage.of(productDomainModels, productEntityPage);
+
+        // When
+        when(productReadService.getProducts(any(ProductPagingRequest.class))).thenReturn(productPage);
+
+        // Then
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(pagingRequest))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + mockUserToken.getAccessToken()))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.httpStatus").value("OK"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.isSuccess").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.content[0].id").value(expected.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.content[0].name").value(expected.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.content[0].amount").value(expected.getAmount()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.content[0].unitPrice").value(expected.getUnitPrice()));
+
+        // Verify
+        verify(productReadService, times(1)).getProducts(any(ProductPagingRequest.class));
+
+    }
+
+    @Test
+    void givenProductUpdateRequest_WhenUpdateProductByFromAdmin_thenReturnUpdatedProduct() throws Exception {
 
         // Given
         String productId = UUID.randomUUID().toString();
@@ -203,7 +296,8 @@ class ProductControllerTest extends AbstractRestControllerTest {
         // Then
         mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/products/{productId}", productId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(productUpdateRequest)))
+                        .content(objectMapper.writeValueAsString(productUpdateRequest))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + mockAdminToken.getAccessToken()))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.httpStatus").value("OK"))
@@ -219,13 +313,14 @@ class ProductControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    void givenProductId_WhenDeleteProductById_thenReturnDeletedProduct() throws Exception {
+    void givenProductId_WhenDeleteProductByIdFromAdmin_thenReturnDeletedProduct() throws Exception {
 
         // Given
         String productId = UUID.randomUUID().toString();
 
         // Then
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/products/{productId}", productId))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/products/{productId}", productId)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + mockAdminToken.getAccessToken()))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.httpStatus").value("OK"))

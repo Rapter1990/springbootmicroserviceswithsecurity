@@ -1,7 +1,5 @@
 package com.springbootmicroservices.productservice.service.impl;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.springbootmicroservices.productservice.base.AbstractBaseServiceTest;
 import com.springbootmicroservices.productservice.exception.ProductNotFoundException;
 import com.springbootmicroservices.productservice.model.common.CustomPage;

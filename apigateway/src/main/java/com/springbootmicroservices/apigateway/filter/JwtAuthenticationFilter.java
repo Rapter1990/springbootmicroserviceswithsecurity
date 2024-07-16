@@ -3,13 +3,13 @@ package com.springbootmicroservices.apigateway.filter;
 import com.springbootmicroservices.apigateway.client.UserServiceClient;
 import com.springbootmicroservices.apigateway.model.Token;
 import feign.FeignException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
