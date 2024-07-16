@@ -1,0 +1,427 @@
+{
+	"info": {
+		"_postman_id": "d8c387f5-fc46-4eea-be65-37c12f997f71",
+		"name": "Spring Boot Microservices with JWT Example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5570426"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "admin",
+					"item": [
+						{
+							"name": "Register Admin",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"password\": \"adminpassword\",\r\n    \"firstName\": \"Admin\",\r\n    \"lastName\": \"User\",\r\n    \"phoneNumber\": \"1234567890\",\r\n    \"role\": \"admin\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:1110/api/v1/authentication/users/register",
+									"host": [
+										"localhost"
+									],
+									"port": "1110",
+									"path": [
+										"api",
+										"v1",
+										"authentication",
+										"users",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login Admin",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"password\": \"adminpassword\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:1110/api/v1/authentication/users/login",
+									"host": [
+										"localhost"
+									],
+									"port": "1110",
+									"path": [
+										"api",
+										"v1",
+										"authentication",
+										"users",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Refresh Token",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"refreshToken\": \"eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiJlNmI5YTAzZC0wNjAwLTQ2OTUtYTk2MS0yMzZiYmRiY2I0OGQiLCJpc3MiOiJJU1NVRVIiLCJpYXQiOjE3MjExNDcwMzYsImV4cCI6MTcyMTIzMzQzNiwidXNlcklkIjoiMGM3ZmE2NmMtNzEyYS00MzQ3LWJhNGMtZTNmYTdiOGQ3Y2EzIn0.WqYpVd5PL2OtuN-FnEAKmJfNBV8CfPJ7aUFermhR46ctnyXV2HOrn123WOF7wL4zp8-a25vxaR_EgQ6d9CfE0z9VGy6PBF3UzQFIwtOcvlegxfADWGGPasEEIUZo91ny5HpzcPyj5b7hh_98VbnX6GCJYvWYmVza8TmAsMLIIez1qufVbg65VOr3LYyIHiBSvjVuNgMj6oOeUjOZgaroBhq63z2fBMlb9c1ZxNARWwAZRFIVf4lLvUEx2YcoHvekc2XleZc1EApLbuMRULlZgSLFX8t2a07OIp3NDcJmG6TlaBRuKutIBencfzSdmlyyABSaR4YOl6b74jLw3CablA\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:1110/api/v1/authentication/users/refresh-token",
+									"host": [
+										"localhost"
+									],
+									"port": "1110",
+									"path": [
+										"api",
+										"v1",
+										"authentication",
+										"users",
+										"refresh-token"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logout Admin",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accessToken\": \"eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiJjZDNmMzViNy1jZTRjLTRkZmYtOGE2NS03NTZhNzJhZGJhYWUiLCJpc3MiOiJJU1NVRVIiLCJpYXQiOjE3MjExNDcwODAsImV4cCI6MTcyMTE0ODg4MCwidXNlclN0YXR1cyI6IkFDVElWRSIsInVzZXJMYXN0TmFtZSI6IlVzZXIiLCJ1c2VyUGhvbmVOdW1iZXIiOiI5ODc2NTQzMjEwMTAiLCJ1c2VyRW1haWwiOiJ1c2VyQGV4YW1wbGUuY29tIiwidXNlclR5cGUiOiJVU0VSIiwidXNlckZpcnN0TmFtZSI6IlJlZ3VsYXIiLCJ1c2VySWQiOiIwYzdmYTY2Yy03MTJhLTQzNDctYmE0Yy1lM2ZhN2I4ZDdjYTMifQ.pFKgL207r2iIlIYBDELaaMSmAg90Src41_yIsm0LQtCuNbPTlZ3Qu8IzT4HRX2zN7tZkPJM2YJZ1YgmBo3es2MO7YrxSoiEXr7TJF_l2ndSdww_WE2sh8bgtgwV-0fRsphHdSIFNQdERPuV6pTjISgTVdB8rn6nheXhDxdz0-lOQY_iYMWBUIzKuVROKkw77hpzbF8hzZ3hgppP9ozvJes8RN-ZH_NxIIET5wcJqdaZ76wApT1hPI1dDQ98ooReaeCmZv_9SWvKIYTLhBOjprpkNjeiHiTziKfya1FgvJLTMdiGX6A2slNJYUf27oGS8m9DsZN82qc6I69H-QIEi3A\",\r\n    \"refreshToken\": \"eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiJlNmI5YTAzZC0wNjAwLTQ2OTUtYTk2MS0yMzZiYmRiY2I0OGQiLCJpc3MiOiJJU1NVRVIiLCJpYXQiOjE3MjExNDcwMzYsImV4cCI6MTcyMTIzMzQzNiwidXNlcklkIjoiMGM3ZmE2NmMtNzEyYS00MzQ3LWJhNGMtZTNmYTdiOGQ3Y2EzIn0.WqYpVd5PL2OtuN-FnEAKmJfNBV8CfPJ7aUFermhR46ctnyXV2HOrn123WOF7wL4zp8-a25vxaR_EgQ6d9CfE0z9VGy6PBF3UzQFIwtOcvlegxfADWGGPasEEIUZo91ny5HpzcPyj5b7hh_98VbnX6GCJYvWYmVza8TmAsMLIIez1qufVbg65VOr3LYyIHiBSvjVuNgMj6oOeUjOZgaroBhq63z2fBMlb9c1ZxNARWwAZRFIVf4lLvUEx2YcoHvekc2XleZc1EApLbuMRULlZgSLFX8t2a07OIp3NDcJmG6TlaBRuKutIBencfzSdmlyyABSaR4YOl6b74jLw3CablA\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:1110/api/v1/authentication/users/logout",
+									"host": [
+										"localhost"
+									],
+									"port": "1110",
+									"path": [
+										"api",
+										"v1",
+										"authentication",
+										"users",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "Register User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"user@example.com\",\r\n    \"password\": \"userpassword\",\r\n    \"firstName\": \"Regular\",\r\n    \"lastName\": \"User\",\r\n    \"phoneNumber\": \"987654321010\",\r\n    \"role\": \"user\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:1110/api/v1/authentication/users/register",
+									"host": [
+										"localhost"
+									],
+									"port": "1110",
+									"path": [
+										"api",
+										"v1",
+										"authentication",
+										"users",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"user@example.com\",\r\n    \"password\": \"userpassword\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:1110/api/v1/authentication/users/login",
+									"host": [
+										"localhost"
+									],
+									"port": "1110",
+									"path": [
+										"api",
+										"v1",
+										"authentication",
+										"users",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Refresh Token",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"refreshToken\": \"eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiJlNmI5YTAzZC0wNjAwLTQ2OTUtYTk2MS0yMzZiYmRiY2I0OGQiLCJpc3MiOiJJU1NVRVIiLCJpYXQiOjE3MjExNDcwMzYsImV4cCI6MTcyMTIzMzQzNiwidXNlcklkIjoiMGM3ZmE2NmMtNzEyYS00MzQ3LWJhNGMtZTNmYTdiOGQ3Y2EzIn0.WqYpVd5PL2OtuN-FnEAKmJfNBV8CfPJ7aUFermhR46ctnyXV2HOrn123WOF7wL4zp8-a25vxaR_EgQ6d9CfE0z9VGy6PBF3UzQFIwtOcvlegxfADWGGPasEEIUZo91ny5HpzcPyj5b7hh_98VbnX6GCJYvWYmVza8TmAsMLIIez1qufVbg65VOr3LYyIHiBSvjVuNgMj6oOeUjOZgaroBhq63z2fBMlb9c1ZxNARWwAZRFIVf4lLvUEx2YcoHvekc2XleZc1EApLbuMRULlZgSLFX8t2a07OIp3NDcJmG6TlaBRuKutIBencfzSdmlyyABSaR4YOl6b74jLw3CablA\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:1110/api/v1/authentication/users/refresh-token",
+									"host": [
+										"localhost"
+									],
+									"port": "1110",
+									"path": [
+										"api",
+										"v1",
+										"authentication",
+										"users",
+										"refresh-token"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logout User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accessToken\": \"eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiJjZDNmMzViNy1jZTRjLTRkZmYtOGE2NS03NTZhNzJhZGJhYWUiLCJpc3MiOiJJU1NVRVIiLCJpYXQiOjE3MjExNDcwODAsImV4cCI6MTcyMTE0ODg4MCwidXNlclN0YXR1cyI6IkFDVElWRSIsInVzZXJMYXN0TmFtZSI6IlVzZXIiLCJ1c2VyUGhvbmVOdW1iZXIiOiI5ODc2NTQzMjEwMTAiLCJ1c2VyRW1haWwiOiJ1c2VyQGV4YW1wbGUuY29tIiwidXNlclR5cGUiOiJVU0VSIiwidXNlckZpcnN0TmFtZSI6IlJlZ3VsYXIiLCJ1c2VySWQiOiIwYzdmYTY2Yy03MTJhLTQzNDctYmE0Yy1lM2ZhN2I4ZDdjYTMifQ.pFKgL207r2iIlIYBDELaaMSmAg90Src41_yIsm0LQtCuNbPTlZ3Qu8IzT4HRX2zN7tZkPJM2YJZ1YgmBo3es2MO7YrxSoiEXr7TJF_l2ndSdww_WE2sh8bgtgwV-0fRsphHdSIFNQdERPuV6pTjISgTVdB8rn6nheXhDxdz0-lOQY_iYMWBUIzKuVROKkw77hpzbF8hzZ3hgppP9ozvJes8RN-ZH_NxIIET5wcJqdaZ76wApT1hPI1dDQ98ooReaeCmZv_9SWvKIYTLhBOjprpkNjeiHiTziKfya1FgvJLTMdiGX6A2slNJYUf27oGS8m9DsZN82qc6I69H-QIEi3A\",\r\n    \"refreshToken\": \"eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiJlNmI5YTAzZC0wNjAwLTQ2OTUtYTk2MS0yMzZiYmRiY2I0OGQiLCJpc3MiOiJJU1NVRVIiLCJpYXQiOjE3MjExNDcwMzYsImV4cCI6MTcyMTIzMzQzNiwidXNlcklkIjoiMGM3ZmE2NmMtNzEyYS00MzQ3LWJhNGMtZTNmYTdiOGQ3Y2EzIn0.WqYpVd5PL2OtuN-FnEAKmJfNBV8CfPJ7aUFermhR46ctnyXV2HOrn123WOF7wL4zp8-a25vxaR_EgQ6d9CfE0z9VGy6PBF3UzQFIwtOcvlegxfADWGGPasEEIUZo91ny5HpzcPyj5b7hh_98VbnX6GCJYvWYmVza8TmAsMLIIez1qufVbg65VOr3LYyIHiBSvjVuNgMj6oOeUjOZgaroBhq63z2fBMlb9c1ZxNARWwAZRFIVf4lLvUEx2YcoHvekc2XleZc1EApLbuMRULlZgSLFX8t2a07OIp3NDcJmG6TlaBRuKutIBencfzSdmlyyABSaR4YOl6b74jLw3CablA\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:1110/api/v1/authentication/users/logout",
+									"host": [
+										"localhost"
+									],
+									"port": "1110",
+									"path": [
+										"api",
+										"v1",
+										"authentication",
+										"users",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "Create Product (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiI2M2U2YTViYi02ZDcwLTQwNTQtODI1MS05NTA2NWE3NzcyMzYiLCJpc3MiOiJJU1NVRVIiLCJpYXQiOjE3MjExNTM2MDgsImV4cCI6MTcyMTE1NTQwOCwidXNlclN0YXR1cyI6IkFDVElWRSIsInVzZXJMYXN0TmFtZSI6IlVzZXIiLCJ1c2VyUGhvbmVOdW1iZXIiOiIxMjM0NTY3ODkwMTAiLCJ1c2VyRW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInVzZXJUeXBlIjoiQURNSU4iLCJ1c2VyRmlyc3ROYW1lIjoiQWRtaW4iLCJ1c2VySWQiOiIwMDY4MjUzNy04ZmUzLTQ3YmEtOTUzNS1lYWIxY2U2MDg3ODEifQ.B2hm7jRcbGKD9FfnpD2ywUuQrOkJ0SfXHP_fqwITxm7Y0W5OZOog7nbYu3cM5Pmemrlx4CkoO4y6jkdDhU8OklE1pZmXVUHnsd0oWZIQ51Wcv_LXvc2J4A37AAkopUZymOZsqNmc1F_A5shWtnmasykRstlntHGiSFjWiUK-apRUktSh4gGGQxlEqLDEincP-LjcdEN6hq5aWsbw-isKkl_DwTekGorGSWVoZd-0KT2fd7cUjcntKgK7pBLHWGz6yyIi4WVz2zAqXVs_OMLtzkcs_c3WpKzi76hTln_RQ55XRRkQJUe4eqg2OXxJzzACewMJrSrFnw6clZ5OC94bsA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Phone\",\r\n    \"amount\": 21,\r\n    \"unitPrice\": 999.90\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1110/api/v1/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1110",
+							"path": [
+								"api",
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product by Id (User, Admin)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1223/api/v1/products/1c9b285f-d8b9-4b70-9527-c28a3ca864b5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1223",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"1c9b285f-d8b9-4b70-9527-c28a3ca864b5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Products (User,Admin)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pagination\": {\r\n        \"pageNumber\": 1,\r\n        \"pageSize\": 5\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1223/api/v1/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1223",
+							"path": [
+								"api",
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1223/api/v1/products/{{productId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1223",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"{{productId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiJmODQzZGFhYy00NDhiLTQwYWQtYWQwNy0zMmNkNDVmYzQ4ZGYiLCJpc3MiOiJJU1NVRVIiLCJpYXQiOjE3MTE0ODUwMzcsImV4cCI6MTcxMTQ4NjgzNywidXNlclN0YXR1cyI6IkFDVElWRSIsInVzZXJMYXN0TmFtZSI6ImV4YW1wbGVBZG1pblN1ck5hbWUiLCJ1c2VyUGhvbmVOdW1iZXIiOiIwMTIzNDU2Nzg5MCIsInVzZXJFbWFpbCI6ImV4YW1wbGVBZG1pbkBnbWFpbC5jb20iLCJ1c2VyVHlwZSI6IkFETUlOIiwidXNlckZpcnN0TmFtZSI6ImV4YW1wbGVBZG1pbkZpcnN0TmFtZSIsInVzZXJJZCI6IjE2NzNhZDc1LWE5NDUtNDY1OS04YmNjLTkxZGMwM2M3MjVmYSJ9.VQu4AUvYX3ODuiKAuqI-Q3M5imBgS-cXDDoxAsrfRDL0KBOeOKKat-kDNR8YLRhLT5sHqYQxoLYSRDNbAN6EiAOjWZw2lsI8v5YOeZ9c5T-a1nqpxQ-PJMAuNjy5f_vRx_AVVacw-vXRy0c-7cRUeY-6HoKRjsCNAV5lg_etsUGwxWwo6QLQTzSGzAkUys7JokNcSZiB3X-6oMJ4Wt7SV4_KM86kPJVqZ686Mrhn2NFAbPsJGzFJT52wCh45T4M3vK9Fz95bvXlAekjMECRi3lmXFDMmNl0mh7Ls5kY9WdtQdGjjnvhi3xGcFpf7Xx3XOXmke4ndz4e6pIKHCYpSzg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1223/api/v1/products/cb46d5ce-0306-4b06-90a0-158220d03ec8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1223",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"cb46d5ce-0306-4b06-90a0-158220d03ec8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
