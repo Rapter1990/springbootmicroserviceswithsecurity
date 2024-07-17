@@ -21,4 +21,5 @@ public class User extends BaseDomainModel {
     private String phoneNumber;
     private UserStatus userStatus;
     private UserType userType;
+    private String password;
 }
