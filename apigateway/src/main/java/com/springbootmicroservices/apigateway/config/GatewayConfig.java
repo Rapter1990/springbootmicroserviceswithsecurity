@@ -21,7 +21,9 @@ public class GatewayConfig {
     // Define the list of public endpoints
     private static final List<String> PUBLIC_ENDPOINTS = List.of(
             "/api/v1/authentication/users/register",
-            "/api/v1/authentication/users/login"
+            "/api/v1/authentication/users/login",
+            "/api/v1/authentication/users/refresh-token",
+            "/api/v1/authentication/users/logout"
     );
 
     /**
