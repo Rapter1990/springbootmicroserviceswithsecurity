@@ -56,7 +56,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
             }
 
             String jwt = Token.getJwt(authorizationHeader);
-            WebClient webClient = webClientBuilder.baseUrl("http://user-service").build();
+            WebClient webClient = webClientBuilder.baseUrl("http://userservice").build();
 
             return webClient.post()
                     .uri("/api/v1/users/validate-token?token=" + jwt)
