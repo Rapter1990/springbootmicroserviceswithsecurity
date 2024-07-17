@@ -44,7 +44,7 @@ public class GatewayConfig {
                 .route("userservice", r -> r.path("/api/v1/users/**")
                         .filters(f -> f.filter(jwtAuthFilter.apply(new JwtAuthenticationFilter.Config()
                                 .setPublicEndpoints(PUBLIC_ENDPOINTS))))
-                        .uri("lb://authservice"))
+                        .uri("lb://userservice"))
                 .build();
     }
 
