@@ -1,15 +1,17 @@
 package com.springbootmicroservices.apigateway.filter;
 
+import com.springbootmicroservices.apigateway.client.UserServiceClient;
 import com.springbootmicroservices.apigateway.model.Token;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.List;
 
@@ -17,11 +19,6 @@ import java.util.List;
 @Slf4j
 public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAuthenticationFilter.Config> {
 
-    private final WebClient.Builder webClientBuilder;
-
-    public JwtAuthenticationFilter(WebClient.Builder webClientBuilder) {
-        this.webClientBuilder = webClientBuilder;
-    }
 
     public static class Config {
         // List of public endpoints that should not be filtered
@@ -49,28 +46,30 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
 
             String authorizationHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
-            // if there is nothing in the headers, exit early and no need to call the rest of the filters
-            if (authorizationHeader == null || !Token.isBearerToken(authorizationHeader)) {
-                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                return exchange.getResponse().setComplete();
+            if (Token.isBearerToken(authorizationHeader)) {
+                String jwt = Token.getJwt(authorizationHeader);
+
+                // Inject UserServiceClient here
+                ApplicationContext context = exchange.getApplicationContext();
+                UserServiceClient userServiceClient = context.getBean(UserServiceClient.class);
+
+                return Mono.fromCallable(() -> {
+                            userServiceClient.validateToken(jwt);
+                            return true;
+                        })
+                        .subscribeOn(Schedulers.boundedElastic())
+                        .flatMap(valid -> chain.filter(exchange))
+                        .onErrorResume(e -> {
+                            if (e instanceof FeignException.Unauthorized || e instanceof FeignException.Forbidden) {
+                                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                            } else {
+                                exchange.getResponse().setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
+                            }
+                            return exchange.getResponse().setComplete();
+                        });
             }
 
-            String jwt = Token.getJwt(authorizationHeader);
-            WebClient webClient = webClientBuilder.baseUrl("http://userservice").build();
-
-            return webClient.post()
-                    .uri("/api/v1/users/validate-token?token=" + jwt)
-                    .header(HttpHeaders.AUTHORIZATION, authorizationHeader)
-                    .retrieve()
-                    .onStatus(HttpStatusCode::isError, clientResponse -> Mono.error(new RuntimeException("Token Validation failed.")))
-                    .bodyToMono(Void.class)
-                    .then(chain.filter(exchange))
-                    .onErrorResume(e -> {
-                        log.error("Error validating token: {}", e.getMessage());
-                        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                        return exchange.getResponse().setComplete();
-                    });
-
+            return chain.filter(exchange);
         };
     }
 
