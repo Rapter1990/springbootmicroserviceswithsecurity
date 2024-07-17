@@ -11,6 +11,7 @@ import com.springbootmicroservices.userservice.model.user.mapper.TokenToTokenRes
 import com.springbootmicroservices.userservice.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
 
     private final RegisterService registerService;
@@ -34,18 +36,21 @@ public class UserController {
 
     @PostMapping("/register")
     public CustomResponse<Void> registerUser(@RequestBody @Validated final RegisterRequest registerRequest) {
+        log.info("UserController | registerUser");
         registerService.registerUser(registerRequest);
         return CustomResponse.SUCCESS;
     }
 
     @PostMapping("/validate-token")
     public ResponseEntity<Void> validateToken(@RequestParam String token) {
+        log.info("UserController | validateToken");
         tokenService.verifyAndValidate(token);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")
     public CustomResponse<TokenResponse> loginUser(@RequestBody @Valid final LoginRequest loginRequest) {
+        log.info("UserController | validateToken");
         final Token token = userLoginService.login(loginRequest);
         final TokenResponse tokenResponse = tokenToTokenResponseMapper.map(token);
         return CustomResponse.successOf(tokenResponse);
@@ -53,6 +58,7 @@ public class UserController {
 
     @PostMapping("/refresh-token")
     public CustomResponse<TokenResponse> refreshToken(@RequestBody @Valid final TokenRefreshRequest tokenRefreshRequest) {
+        log.info("UserController | refreshToken");
         final Token token = refreshTokenService.refreshToken(tokenRefreshRequest);
         final TokenResponse tokenResponse = tokenToTokenResponseMapper.map(token);
         return CustomResponse.successOf(tokenResponse);
@@ -60,6 +66,7 @@ public class UserController {
 
     @PostMapping("/logout")
     public CustomResponse<Void> logout(@RequestBody @Valid final TokenInvalidateRequest tokenInvalidateRequest) {
+        log.info("UserController | logout");
         logoutService.logout(tokenInvalidateRequest);
         return CustomResponse.SUCCESS;
     }
