@@ -83,6 +83,23 @@ services:
     networks:
       - springbootmicroservicesnetwork
 
+  authservice:
+    image: authservice:latest
+    build:
+      context: ./authservice
+      dockerfile: Dockerfile
+    ports:
+      - "1112:1112"
+    environment:
+      - server.port=1112
+      - SPRING_APPLICATION_NAME=authservice
+      - EUREKA_SERVICE_URL=http://eurekaserver:8761/eureka/
+    depends_on:
+      eurekaserver:
+        condition: service_started
+    networks:
+      - springbootmicroservicesnetwork
+
 networks:
   springbootmicroservicesnetwork:
     driver: bridge
