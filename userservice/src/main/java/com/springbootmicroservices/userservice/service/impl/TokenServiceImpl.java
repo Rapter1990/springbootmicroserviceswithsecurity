@@ -8,21 +8,22 @@ import com.springbootmicroservices.userservice.model.user.enums.TokenType;
 import com.springbootmicroservices.userservice.model.user.enums.UserType;
 import com.springbootmicroservices.userservice.service.InvalidTokenService;
 import com.springbootmicroservices.userservice.service.TokenService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwsHeader;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TokenServiceImpl implements TokenService {
 
     private final TokenConfigurationParameter tokenConfigurationParameter;
@@ -141,10 +142,31 @@ public class TokenServiceImpl implements TokenService {
     }
 
     public void verifyAndValidate(final String jwt) {
-        Jwts.parser()
+
+        try {
+            Jws<Claims> claimsJws = Jwts.parser()
                 .verifyWith(tokenConfigurationParameter.getPublicKey())
                 .build()
                 .parseSignedClaims(jwt);
+
+            // Log the claims for debugging purposes
+            Claims claims = claimsJws.getBody();
+            log.info("Token claims: {}", claims);
+
+            // Additional checks (e.g., expiration, issuer, etc.)
+            if (claims.getExpiration().before(new Date())) {
+                throw new JwtException("Token has expired");
+            }
+
+            log.info("Token is valid");
+
+        } catch (JwtException e) {
+            log.error("Invalid JWT token", e);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid JWT token", e);
+        } catch (Exception e) {
+            log.error("Error validating token", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error validating token", e);
+        }
     }
 
     @Override

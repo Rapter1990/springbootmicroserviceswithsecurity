@@ -1,9 +1,9 @@
 package com.springbootmicroservices.productservice.config;
 
-import com.springbootmicroservices.productservice.client.UserServiceClient;
 import com.springbootmicroservices.productservice.filter.CustomBearerTokenAuthenticationFilter;
 import com.springbootmicroservices.productservice.security.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -28,9 +28,8 @@ import java.util.List;
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableMethodSecurity
+@Slf4j
 public class SecurityConfig {
-
-    private final UserServiceClient userServiceClient;
 
     @Bean
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
@@ -44,6 +43,8 @@ public class SecurityConfig {
             final CustomAuthenticationEntryPoint customAuthenticationEntryPoint
     ) throws Exception {
 
+        log.debug("Configuring Security Filter Chain");
+
         httpSecurity
                 .exceptionHandling(customizer -> customizer.authenticationEntryPoint(customAuthenticationEntryPoint))
                 .cors(customizer -> customizer.configurationSource(corsConfigurationSource()))
@@ -53,6 +54,8 @@ public class SecurityConfig {
                 )
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(customBearerTokenAuthenticationFilter, BearerTokenAuthenticationFilter.class);
+
+        log.debug("CustomBearerTokenAuthenticationFilter added to the filter chain");
 
         return httpSecurity.build();
     }
@@ -71,5 +74,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-}
 
+}

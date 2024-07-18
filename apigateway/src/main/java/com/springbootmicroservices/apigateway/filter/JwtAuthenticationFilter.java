@@ -55,11 +55,13 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
 
                 return Mono.fromCallable(() -> {
                             userServiceClient.validateToken(jwt);
+                            log.debug("Token validation succeeded for path: {}", path);
                             return true;
                         })
                         .subscribeOn(Schedulers.boundedElastic())
                         .flatMap(valid -> chain.filter(exchange))
                         .onErrorResume(e -> {
+                            log.error("Token validation failed for path: {}", path, e);
                             if (e instanceof FeignException.Unauthorized || e instanceof FeignException.Forbidden) {
                                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                             } else {
@@ -68,7 +70,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
                             return exchange.getResponse().setComplete();
                         });
             }
-
+            log.warn("Missing or invalid Authorization header for path: {}", path);
             return chain.filter(exchange);
         };
     }
