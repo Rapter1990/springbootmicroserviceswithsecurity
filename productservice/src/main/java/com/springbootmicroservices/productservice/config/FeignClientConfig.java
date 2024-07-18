@@ -1,6 +1,9 @@
 package com.springbootmicroservices.productservice.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.springbootmicroservices.productservice.serializer.UsernamePasswordAuthenticationTokenMixin;
 import feign.FeignException;
 import feign.Request;
 import feign.Response;
@@ -10,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +24,15 @@ import java.util.Map;
 @Slf4j
 @Configuration
 public class FeignClientConfig {
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.addMixIn(UsernamePasswordAuthenticationToken.class, UsernamePasswordAuthenticationTokenMixin.class);
+        objectMapper.registerModule(new JavaTimeModule()); // Register JavaTimeModule for date/time support
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); // Ignore unknown properties
+        return objectMapper;
+    }
 
     @Bean
     public Decoder feignDecoder(ObjectMapper objectMapper) {
