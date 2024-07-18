@@ -49,8 +49,6 @@ public class CustomBearerTokenAuthenticationFilter extends OncePerRequestFilter 
                 // Set authentication to SecurityContextHolder
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
-                // Proceed with the filter chain
-                filterChain.doFilter(httpServletRequest, httpServletResponse);
             } catch (FeignException e) {
                 log.error("Token validation failed for request: {}", httpServletRequest.getRequestURI(), e);
 
@@ -64,7 +62,9 @@ public class CustomBearerTokenAuthenticationFilter extends OncePerRequestFilter 
             }
         } else {
             log.warn("Missing or invalid Authorization header for request: {}", httpServletRequest.getRequestURI());
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
         }
+
+        // Proceed with the filter chain in any case
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }

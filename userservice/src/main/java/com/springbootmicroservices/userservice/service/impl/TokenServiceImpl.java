@@ -2,7 +2,6 @@ package com.springbootmicroservices.userservice.service.impl;
 
 import com.springbootmicroservices.userservice.config.TokenConfigurationParameter;
 import com.springbootmicroservices.userservice.model.user.Token;
-import com.springbootmicroservices.userservice.model.user.enums.ConfigurationParameter;
 import com.springbootmicroservices.userservice.model.user.enums.TokenClaims;
 import com.springbootmicroservices.userservice.model.user.enums.TokenType;
 import com.springbootmicroservices.userservice.model.user.enums.UserType;
@@ -45,7 +44,6 @@ public class TokenServiceImpl implements TokenService {
                 .type(TokenType.BEARER.getValue())
                 .and()
                 .id(UUID.randomUUID().toString())
-                .issuer(ConfigurationParameter.ISSUER.getDefaultValue())
                 .issuedAt(tokenIssuedAt)
                 .expiration(accessTokenExpiresAt)
                 .signWith(tokenConfigurationParameter.getPrivateKey())
@@ -62,7 +60,6 @@ public class TokenServiceImpl implements TokenService {
                 .type(TokenType.BEARER.getValue())
                 .and()
                 .id(UUID.randomUUID().toString())
-                .issuer(tokenConfigurationParameter.getIssuer())
                 .issuedAt(tokenIssuedAt)
                 .expiration(refreshTokenExpiresAt)
                 .signWith(tokenConfigurationParameter.getPrivateKey())
@@ -96,7 +93,6 @@ public class TokenServiceImpl implements TokenService {
                 .type(TokenType.BEARER.getValue())
                 .and()
                 .id(UUID.randomUUID().toString())
-                .issuer(tokenConfigurationParameter.getIssuer())
                 .issuedAt(accessTokenIssuedAt)
                 .expiration(accessTokenExpiresAt)
                 .signWith(tokenConfigurationParameter.getPrivateKey())
@@ -150,7 +146,7 @@ public class TokenServiceImpl implements TokenService {
                 .parseSignedClaims(jwt);
 
             // Log the claims for debugging purposes
-            Claims claims = claimsJws.getBody();
+            Claims claims = claimsJws.getPayload();
             log.info("Token claims: {}", claims);
 
             // Additional checks (e.g., expiration, issuer, etc.)

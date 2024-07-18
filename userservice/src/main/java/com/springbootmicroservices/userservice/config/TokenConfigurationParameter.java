@@ -11,7 +11,7 @@ import java.security.PublicKey;
 @Getter
 @Configuration
 public class TokenConfigurationParameter {
-    private final String issuer;
+
     private final int accessTokenExpireMinute;
     private final int refreshTokenExpireDay;
     private final PublicKey publicKey;
@@ -19,7 +19,7 @@ public class TokenConfigurationParameter {
 
     public TokenConfigurationParameter() {
 
-        this.issuer = ConfigurationParameter.ISSUER.getDefaultValue();
+        //this.issuer = ConfigurationParameter.ISSUER.getDefaultValue();
 
         this.accessTokenExpireMinute = Integer.parseInt(
                 ConfigurationParameter.AUTH_ACCESS_TOKEN_EXPIRE_MINUTE.getDefaultValue()
