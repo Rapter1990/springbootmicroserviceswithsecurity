@@ -4,13 +4,18 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.springbootmicroservices.productservice.model.auth.JwtRecord;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsernamePasswordAuthenticationTokenDeserializer extends JsonDeserializer<UsernamePasswordAuthenticationToken> {
 
@@ -35,6 +40,14 @@ public class UsernamePasswordAuthenticationTokenDeserializer extends JsonDeseria
         // Extracting the credentials
         String credentials = node.get("credentials").isNull() ? null : node.get("credentials").asText();
 
-        return new UsernamePasswordAuthenticationToken(principal, credentials);
+        // Extracting the authorities
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        ArrayNode authoritiesNode = (ArrayNode) node.get("authorities");
+        for (JsonNode authorityNode : authoritiesNode) {
+            String authority = authorityNode.get("authority").asText();
+            authorities.add(new SimpleGrantedAuthority(authority));
+        }
+
+        return new UsernamePasswordAuthenticationToken(principal, credentials, authorities);
     }
 }
