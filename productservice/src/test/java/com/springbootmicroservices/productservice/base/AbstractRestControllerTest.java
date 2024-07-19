@@ -2,6 +2,7 @@ package com.springbootmicroservices.productservice.base;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springbootmicroservices.productservice.builder.UserEntityBuilder;
+import com.springbootmicroservices.productservice.client.UserServiceClient;
 import com.springbootmicroservices.productservice.config.TokenConfigurationParameter;
 import com.springbootmicroservices.productservice.model.auth.Token;
 import com.springbootmicroservices.productservice.model.auth.enums.TokenClaims;
@@ -9,9 +10,13 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.shaded.org.apache.commons.lang3.time.DateUtils;
@@ -37,6 +42,9 @@ public class AbstractRestControllerTest extends AbstractTestContainerConfigurati
     @Mock
     private TokenConfigurationParameter tokenConfiguration;
 
+    @MockBean
+    private UserServiceClient userServiceClient;
+
 
     @BeforeEach
     public void initializeAuth() {
@@ -44,6 +52,15 @@ public class AbstractRestControllerTest extends AbstractTestContainerConfigurati
         this.tokenConfiguration = new TokenConfigurationParameter();
         this.mockAdminToken = this.generate(new UserEntityBuilder().withValidAdminFields().build().getClaims());
         this.mockUserToken = this.generate(new UserEntityBuilder().withValidUserFields().build().getClaims());
+
+        Mockito.doNothing().when(userServiceClient).validateToken(mockAdminToken.getAccessToken());
+        Mockito.doNothing().when(userServiceClient).validateToken(mockAdminToken.getAccessToken());
+
+        Mockito.when(userServiceClient.getAuthentication(mockAdminToken.getAccessToken()))
+                .thenReturn(new UsernamePasswordAuthenticationToken("admin", null, AuthorityUtils.createAuthorityList("ADMIN")));
+
+        Mockito.when(userServiceClient.getAuthentication(mockUserToken.getAccessToken()))
+                .thenReturn(new UsernamePasswordAuthenticationToken("user", null, AuthorityUtils.createAuthorityList("USER")));
 
     }
 
