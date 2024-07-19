@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.springbootmicroservices.productservice.model.auth.JwtRecord;
+import com.springbootmicroservices.productservice.utils.JwtRecordConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,7 +36,10 @@ public class UsernamePasswordAuthenticationTokenDeserializer extends JsonDeseria
 
         // Extract the nested principal object and deserialize it into a JwtRecord object
         JsonNode principalNode = node.get("principal");
-        JwtRecord principal = objectMapper.treeToValue(principalNode, JwtRecord.class);
+        JwtRecord jwtRecord = objectMapper.treeToValue(principalNode, JwtRecord.class);
+
+        // Convert JwtRecord to Jwt
+        Jwt principal = JwtRecordConverter.convertJwtRecordToJwt(jwtRecord);
 
         // Extracting the credentials
         String credentials = node.get("credentials").isNull() ? null : node.get("credentials").asText();
@@ -50,4 +54,5 @@ public class UsernamePasswordAuthenticationTokenDeserializer extends JsonDeseria
 
         return new UsernamePasswordAuthenticationToken(principal, credentials, authorities);
     }
+
 }

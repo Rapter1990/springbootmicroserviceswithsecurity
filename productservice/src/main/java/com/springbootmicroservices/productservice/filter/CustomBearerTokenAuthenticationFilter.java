@@ -1,6 +1,7 @@
 package com.springbootmicroservices.productservice.filter;
 
 import com.springbootmicroservices.productservice.client.UserServiceClient;
+import com.springbootmicroservices.productservice.model.auth.JwtRecord;
 import com.springbootmicroservices.productservice.model.auth.Token;
 import feign.FeignException;
 import jakarta.servlet.FilterChain;
@@ -14,6 +15,7 @@ import org.apache.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -67,4 +69,10 @@ public class CustomBearerTokenAuthenticationFilter extends OncePerRequestFilter 
         // Proceed with the filter chain in any case
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
+
+
+    private Jwt convertJwtRecordToJwt(JwtRecord jwtRecord) {
+        return new Jwt(jwtRecord.tokenValue(), jwtRecord.issuedAt(), jwtRecord.expiresAt(), jwtRecord.headers(), jwtRecord.claims());
+    }
+
 }
