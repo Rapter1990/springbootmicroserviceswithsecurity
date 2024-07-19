@@ -2,7 +2,9 @@ package com.springbootmicroservices.productservice.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.springbootmicroservices.productservice.serializer.LocalDateTimeSerializer;
 import com.springbootmicroservices.productservice.serializer.UsernamePasswordAuthenticationTokenMixin;
 import feign.FeignException;
 import feign.Request;
@@ -18,6 +20,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 
@@ -30,6 +33,11 @@ public class FeignClientConfig {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.addMixIn(UsernamePasswordAuthenticationToken.class, UsernamePasswordAuthenticationTokenMixin.class);
         objectMapper.registerModule(new JavaTimeModule()); // Register JavaTimeModule for date/time support
+
+        SimpleModule module = new SimpleModule();
+        module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
+        objectMapper.registerModule(module);
+
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); // Ignore unknown properties
         return objectMapper;
     }
