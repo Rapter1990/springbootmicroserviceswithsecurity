@@ -21,16 +21,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public abstract class BaseDomainModel {
 
-    @Column(name = "CREATED_AT")
     private LocalDateTime createdAt;
-
-    @Column(name = "CREATED_BY")
     private String createdBy;
-
-    @Column(name = "UPDATED_AT")
     private LocalDateTime updatedAt;
-
-    @Column(name = "UPDATED_BY")
     private String updatedBy;
 
 }
