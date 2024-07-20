@@ -112,10 +112,10 @@ public class GlobalExceptionHandler {
      * @return ResponseEntity with CustomError containing details of the exception.
      */
     @ExceptionHandler(PasswordNotValidException.class)
-    protected ResponseEntity<Object> handlePasswordNotValidException(final PasswordNotValidException ex) {
+    protected ResponseEntity<CustomError> handlePasswordNotValidException(final PasswordNotValidException ex) {
         CustomError customError = CustomError.builder()
                 .httpStatus(HttpStatus.BAD_REQUEST)
-                .header(CustomError.Header.API_ERROR.getName())
+                .header(CustomError.Header.VALIDATION_ERROR.getName())
                 .message(ex.getMessage())
                 .build();
 

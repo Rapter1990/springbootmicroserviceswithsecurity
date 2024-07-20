@@ -156,6 +156,9 @@ public class TokenServiceImpl implements TokenService {
 
             log.info("Token is valid");
 
+        } catch (ExpiredJwtException e) {
+            log.error("Token has expired", e);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token has expired", e);
         } catch (JwtException e) {
             log.error("Invalid JWT token", e);
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid JWT token", e);

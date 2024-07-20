@@ -10,14 +10,12 @@ import com.springbootmicroservices.userservice.model.user.dto.request.TokenInval
 import com.springbootmicroservices.userservice.model.user.dto.request.TokenRefreshRequest;
 import com.springbootmicroservices.userservice.model.user.dto.response.TokenResponse;
 import com.springbootmicroservices.userservice.model.user.mapper.TokenToTokenResponseMapper;
-import com.springbootmicroservices.userservice.service.LogoutService;
-import com.springbootmicroservices.userservice.service.RefreshTokenService;
-import com.springbootmicroservices.userservice.service.RegisterService;
-import com.springbootmicroservices.userservice.service.UserLoginService;
+import com.springbootmicroservices.userservice.service.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -41,6 +39,9 @@ class UserControllerTest extends AbstractRestControllerTest {
 
     @MockBean
     private LogoutService userLogoutService;
+
+    @MockBean
+    private TokenService tokenService;
 
     private final TokenToTokenResponseMapper tokenToTokenResponseMapper = TokenToTokenResponseMapper.initialize();
 
@@ -178,6 +179,49 @@ class UserControllerTest extends AbstractRestControllerTest {
 
         // Verify
         verify(userLogoutService, times(1)).logout(any(TokenInvalidateRequest.class));
+
+    }
+
+    @Test
+    void givenValidToken_whenValidateToken_thenReturnOk() throws Exception {
+
+        // Given
+        String validToken = "validToken";
+
+        // When
+        doNothing().when(tokenService).verifyAndValidate(validToken);
+
+        // Then
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/users/validate-token")
+                        .param("token", validToken))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        // Verify
+        verify(tokenService, times(1)).verifyAndValidate(validToken);
+
+    }
+
+    @Test
+    void givenValidToken_whenGetAuthentication_thenReturnAuthentication() throws Exception {
+
+        // Given
+        String validToken = "validToken";
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken("user", "password");
+
+        // When
+        when(tokenService.getAuthentication(validToken)).thenReturn(authenticationToken);
+
+        // Then
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/authenticate")
+                        .param("token", validToken))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.principal").value("user"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.credentials").value("password"));
+
+        // Verify
+        verify(tokenService, times(1)).getAuthentication(validToken);
 
     }
 
