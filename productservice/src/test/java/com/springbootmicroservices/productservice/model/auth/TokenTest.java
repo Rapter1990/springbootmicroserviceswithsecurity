@@ -1,9 +1,8 @@
-package com.springbootmicroservices.authservice.model.auth;
-
-import static org.junit.jupiter.api.Assertions.*;
+package com.springbootmicroservices.productservice.model.auth;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.util.StringUtils;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TokenTest {
 

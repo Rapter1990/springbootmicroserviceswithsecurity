@@ -70,9 +70,4 @@ public class CustomBearerTokenAuthenticationFilter extends OncePerRequestFilter 
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
-
-    private Jwt convertJwtRecordToJwt(JwtRecord jwtRecord) {
-        return new Jwt(jwtRecord.tokenValue(), jwtRecord.issuedAt(), jwtRecord.expiresAt(), jwtRecord.headers(), jwtRecord.claims());
-    }
-
 }

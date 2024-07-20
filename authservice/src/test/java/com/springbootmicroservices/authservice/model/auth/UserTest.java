@@ -6,7 +6,7 @@ import com.springbootmicroservices.authservice.model.auth.enums.UserStatus;
 import com.springbootmicroservices.authservice.model.auth.enums.UserType;
 import org.junit.jupiter.api.Test;
 
-public class UserTest {
+class UserTest {
 
     @Test
     void testUserBuilder_WithAllFields() {
