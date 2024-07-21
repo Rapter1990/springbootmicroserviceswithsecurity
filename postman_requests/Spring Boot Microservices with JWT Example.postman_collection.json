@@ -280,7 +280,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiI2M2U2YTViYi02ZDcwLTQwNTQtODI1MS05NTA2NWE3NzcyMzYiLCJpc3MiOiJJU1NVRVIiLCJpYXQiOjE3MjExNTM2MDgsImV4cCI6MTcyMTE1NTQwOCwidXNlclN0YXR1cyI6IkFDVElWRSIsInVzZXJMYXN0TmFtZSI6IlVzZXIiLCJ1c2VyUGhvbmVOdW1iZXIiOiIxMjM0NTY3ODkwMTAiLCJ1c2VyRW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInVzZXJUeXBlIjoiQURNSU4iLCJ1c2VyRmlyc3ROYW1lIjoiQWRtaW4iLCJ1c2VySWQiOiIwMDY4MjUzNy04ZmUzLTQ3YmEtOTUzNS1lYWIxY2U2MDg3ODEifQ.B2hm7jRcbGKD9FfnpD2ywUuQrOkJ0SfXHP_fqwITxm7Y0W5OZOog7nbYu3cM5Pmemrlx4CkoO4y6jkdDhU8OklE1pZmXVUHnsd0oWZIQ51Wcv_LXvc2J4A37AAkopUZymOZsqNmc1F_A5shWtnmasykRstlntHGiSFjWiUK-apRUktSh4gGGQxlEqLDEincP-LjcdEN6hq5aWsbw-isKkl_DwTekGorGSWVoZd-0KT2fd7cUjcntKgK7pBLHWGz6yyIi4WVz2zAqXVs_OMLtzkcs_c3WpKzi76hTln_RQ55XRRkQJUe4eqg2OXxJzzACewMJrSrFnw6clZ5OC94bsA",
+									"value": "eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiI5ZmUyZDc4ZS00MTJlLTQzYjItYjI4OC1kYTdjMTQ5NWRjMWUiLCJpc3MiOiJJU1NVRVIiLCJpYXQiOjE3MjEyODIxOTMsImV4cCI6MTcyMTI4Mzk5MywidXNlclN0YXR1cyI6IkFDVElWRSIsInVzZXJMYXN0TmFtZSI6IlVzZXIiLCJ1c2VyUGhvbmVOdW1iZXIiOiIxMjM0NTY3ODkwMTAiLCJ1c2VyRW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInVzZXJUeXBlIjoiQURNSU4iLCJ1c2VyRmlyc3ROYW1lIjoiQWRtaW4iLCJ1c2VySWQiOiIwMDY4MjUzNy04ZmUzLTQ3YmEtOTUzNS1lYWIxY2U2MDg3ODEifQ.lQbUSQ6to-kdvPYVyBDMtVwrEKTDX0hgGG0GlN8wT8aaTl45U2ksKPYnkvU7Dzxni9MH3yZ5lmVLbsdUfbyjDZLM9XXyemSL83eFQuqGllDFXeHZG4NA-HJ-4GnGz3AR4Jg9DvawRVmvf1smk3Ma3UtD5eN-XEqeSdWXx6Yteswhviwk595v5Gu-flsOhr2kneK8lhkB78TwrzVl7UOUjRSMrulbuSuWTcUfACblNnM0Ni4MYY5Sk-oJlSp1ZtmQLy1MDH1ihmg0DhosUx77JrSPh6EiPWqbqlywIoptqErJUlhsHmn2zhZyMy5NoyqFv3kqBBHNf7tC0WZ5MnbXpg",
 									"type": "string"
 								}
 							]
@@ -315,20 +315,30 @@
 				{
 					"name": "Get Product by Id (User, Admin)",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiJhOWYxZjFmZS1lM2JiLTRlN2QtODQ3ZS1lODBmYjczNDU0MWEiLCJpYXQiOjE3MjEzNzM4MjgsImV4cCI6MTcyMTM3NTYyOCwidXNlclN0YXR1cyI6IkFDVElWRSIsInVzZXJMYXN0TmFtZSI6IlVzZXIiLCJ1c2VyUGhvbmVOdW1iZXIiOiIxMjM0NTY3ODkwMTAiLCJ1c2VyRW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInVzZXJUeXBlIjoiQURNSU4iLCJ1c2VyRmlyc3ROYW1lIjoiQWRtaW4iLCJ1c2VySWQiOiIwMDY4MjUzNy04ZmUzLTQ3YmEtOTUzNS1lYWIxY2U2MDg3ODEifQ.S5AWP2XILAAh3fKd7j3P-9zN0mCga5Q4YTd_Xm8RAgRYa8omzqyzyJOGiH330isQ28j-uWpO08mKcNuYR_3bJBdCpXY5JPIJD8SOnZeNpdaCgrfISzYFiuZRo8OaK4A5iECOvb9k37vC14bhROeC_8KKjS2mrVXqwB7FN8NGU6M10GGNSPZ5vHphaUs0FY2JvhnrXg89dMGl81use_2gXMgLera757GrdRM2VUVc4lFxrx57PeyySsPn0BHYqdP70xXwJawh-ndx6PK4OihGoo4gJQxTZwGCR0as8fYL5P7fKUDx51W9MItCkedeuOX5kCM-4x3NeW8C69MavI2FMQ",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:1223/api/v1/products/1c9b285f-d8b9-4b70-9527-c28a3ca864b5",
+							"raw": "http://localhost:1110/api/v1/products/d95d1fda-3e49-4827-bda7-6eca7c6dc0be",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "1223",
+							"port": "1110",
 							"path": [
 								"api",
 								"v1",
 								"products",
-								"1c9b285f-d8b9-4b70-9527-c28a3ca864b5"
+								"d95d1fda-3e49-4827-bda7-6eca7c6dc0be"
 							]
 						}
 					},
@@ -352,12 +362,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:1223/api/v1/products",
+							"raw": "http://localhost:1110/api/v1/products",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "1223",
+							"port": "1110",
 							"path": [
 								"api",
 								"v1",
@@ -373,12 +383,12 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:1223/api/v1/products/{{productId}}",
+							"raw": "http://localhost:1110/api/v1/products/{{productId}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "1223",
+							"port": "1110",
 							"path": [
 								"api",
 								"v1",
@@ -405,12 +415,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:1223/api/v1/products/cb46d5ce-0306-4b06-90a0-158220d03ec8",
+							"raw": "http://localhost:1110/api/v1/products/cb46d5ce-0306-4b06-90a0-158220d03ec8",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "1223",
+							"port": "1110",
 							"path": [
 								"api",
 								"v1",
