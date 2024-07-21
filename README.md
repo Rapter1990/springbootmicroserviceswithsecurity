@@ -184,6 +184,12 @@
 - Spring Security
 - JWT
 
+### Postman
+
+```
+Import postman collection under postman_collection folder
+```
+
 
 ### Prerequisites
 
@@ -241,6 +247,17 @@ $ cd ..
 $ cd productservice
 $ mvn clean install
 $ mvn spring-boot:run
+```
+
+---
+### Docker Image Location
+
+```
+https://hub.docker.com/repository/docker/noyandocker/springbootmicroserviceswithsecurityeurekaserver/general
+https://hub.docker.com/repository/docker/noyandocker/springbootmicroserviceswithsecurityapigateway/general
+https://hub.docker.com/repository/docker/noyandocker/springbootmicroserviceswithsecurityauthservice/general
+https://hub.docker.com/repository/docker/noyandocker/springbootmicroserviceswithsecurityuserservice/general
+https://hub.docker.com/repository/docker/noyandocker/springbootmicroserviceswithsecurityproductservice/general
 ```
 
 ### Screenshots
