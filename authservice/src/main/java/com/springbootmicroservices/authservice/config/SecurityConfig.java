@@ -24,17 +24,35 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+/**
+ * Configuration class named {@link SecurityConfig} for Spring Security.
+ * It sets up security filters, session management, CORS configuration, and password encoding.
+ */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    /**
+     * Configures the session authentication strategy.
+     *
+     * @return the session authentication strategy
+     */
     @Bean
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
         return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
     }
 
+    /**
+     * Configures the security filter chain.
+     *
+     * @param httpSecurity the HttpSecurity to modify
+     * @param customBearerTokenAuthenticationFilter the custom filter for Bearer token authentication
+     * @param customAuthenticationEntryPoint the custom entry point for authentication errors
+     * @return the configured security filter chain
+     * @throws Exception if an error occurs while configuring the filter chain
+     */
     @Bean
     public SecurityFilterChain filterChain(
             final HttpSecurity httpSecurity,
@@ -56,7 +74,11 @@ public class SecurityConfig {
         return httpSecurity.build();
     }
 
-
+    /**
+     * Configures the CORS settings.
+     *
+     * @return the CORS configuration source
+     */
     private CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("*"));
@@ -67,8 +89,14 @@ public class SecurityConfig {
         return source;
     }
 
+    /**
+     * Configures the password encoder.
+     *
+     * @return the password encoder
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
