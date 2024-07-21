@@ -8,6 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
+/**
+ * Configuration class named {@link TokenConfigurationParameter} for token parameters.
+ * Provides access to token expiration settings and cryptographic keys.
+ */
 @Getter
 @Configuration
 public class TokenConfigurationParameter {

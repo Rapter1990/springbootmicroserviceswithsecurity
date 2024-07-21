@@ -24,10 +24,19 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 
+/**
+ * Configuration class named {@link FeignClientConfig} for setting up Feign client components.
+ * Configures custom error handling, object mapping, and decoding for Feign clients.
+ */
 @Slf4j
 @Configuration
 public class FeignClientConfig {
 
+    /**
+     * Provides a custom {@link ObjectMapper} bean configured with Jackson modules.
+     *
+     * @return a configured {@link ObjectMapper} instance
+     */
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -42,11 +51,22 @@ public class FeignClientConfig {
         return objectMapper;
     }
 
+    /**
+     * Provides a custom {@link Decoder} bean for Feign clients.
+     *
+     * @param objectMapper the {@link ObjectMapper} to use for decoding
+     * @return a {@link Decoder} instance
+     */
     @Bean
     public Decoder feignDecoder(ObjectMapper objectMapper) {
         return new CustomDecoder(objectMapper);
     }
 
+    /**
+     * Provides a custom {@link ErrorDecoder} bean for Feign clients.
+     *
+     * @return a {@link ErrorDecoder} instance
+     */
     @Bean
     public ErrorDecoder errorDecoder() {
         return new CustomErrorDecoder();

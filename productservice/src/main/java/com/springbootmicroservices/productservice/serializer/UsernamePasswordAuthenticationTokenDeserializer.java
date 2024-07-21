@@ -18,17 +18,34 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Custom deserializer for {@link UsernamePasswordAuthenticationToken}.
+ * This deserializer converts JSON into a {@link UsernamePasswordAuthenticationToken} object.
+ */
 public class UsernamePasswordAuthenticationTokenDeserializer extends JsonDeserializer<UsernamePasswordAuthenticationToken> {
 
     private final ObjectMapper objectMapper;
 
+    /**
+     * Constructs a {@link UsernamePasswordAuthenticationTokenDeserializer} with an {@link ObjectMapper}
+     * configured to handle date/time serialization and ignore unknown properties.
+     */
     public UsernamePasswordAuthenticationTokenDeserializer() {
         this.objectMapper = new ObjectMapper();
         this.objectMapper.registerModule(new JavaTimeModule()); // Register JavaTimeModule for date/time support
         this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); // Ignore unknown properties
     }
 
-
+    /**
+     * Deserializes JSON into a {@link UsernamePasswordAuthenticationToken} object.
+     * Extracts the principal, credentials, and authorities from the JSON.
+     *
+     * @param p the {@link JsonParser} used to parse the JSON
+     * @param ctxt the {@link DeserializationContext} in which the deserialization occurs
+     * @return a {@link UsernamePasswordAuthenticationToken} object
+     * @throws IOException if an I/O error occurs
+     * @throws JsonProcessingException if a JSON processing error occurs
+     */
     @Override
     public UsernamePasswordAuthenticationToken deserialize(JsonParser p, DeserializationContext ctxt)
             throws IOException, JsonProcessingException {

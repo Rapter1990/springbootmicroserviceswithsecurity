@@ -3,6 +3,11 @@ package com.springbootmicroservices.productservice.model.auth;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Enum representing configuration parameters used for token management and key settings.
+ * This enum provides default values for various configuration parameters related
+ * to authentication, including token expiration settings and cryptographic keys.
+ */
 @Getter
 @RequiredArgsConstructor
 public enum ConfigurationParameter {

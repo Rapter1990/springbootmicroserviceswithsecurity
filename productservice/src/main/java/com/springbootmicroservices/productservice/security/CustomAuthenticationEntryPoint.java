@@ -14,6 +14,11 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.text.DateFormat;
 
+/**
+ * Custom implementation of the {@link AuthenticationEntryPoint} interface.
+ * This component is responsible for handling unauthorized access attempts
+ * by sending a custom error response when authentication fails.
+ */
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
@@ -23,7 +28,15 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         OBJECT_MAPPER.registerModule(new JavaTimeModule());
     }
 
-
+    /**
+     * Handles authentication errors by sending a custom error response to the client.
+     * Sets the HTTP status to 401 Unauthorized and sends a JSON response with error details.
+     *
+     * @param httpServletRequest the request that resulted in an AuthenticationException
+     * @param httpServletResponse the response to send to the client
+     * @param authenticationException the exception that triggered this entry point
+     * @throws IOException if an input or output exception occurs
+     */
     @Override
     public void commence(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse,
                          final AuthenticationException authenticationException) throws IOException {

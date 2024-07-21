@@ -21,6 +21,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * Custom filter named {@link CustomBearerTokenAuthenticationFilter} for handling Bearer token authentication in HTTP requests.
+ * This filter extracts the Bearer token from the Authorization header,
+ * validates it, and sets the authentication context if the token is valid.
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -28,6 +33,21 @@ public class CustomBearerTokenAuthenticationFilter extends OncePerRequestFilter 
 
     private final UserServiceClient userServiceClient;
 
+    /**
+     * Processes the incoming HTTP request and performs Bearer token authentication.
+     *
+     * <p>Extracts the Bearer token from the Authorization header, validates the token using
+     * {@link UserServiceClient#validateToken(String)}, and sets the authentication context
+     * if the token is valid. If validation fails, sets the appropriate HTTP status and
+     * writes an error message to the response. The filter chain proceeds regardless of
+     * token validation success or failure.</p>
+     *
+     * @param httpServletRequest the HTTP request
+     * @param httpServletResponse the HTTP response
+     * @param filterChain the filter chain to proceed with
+     * @throws ServletException if an error occurs during filtering
+     * @throws IOException if an I/O error occurs during filtering
+     */
     @Override
     protected void doFilterInternal(@NonNull final HttpServletRequest httpServletRequest,
                                     @NonNull final HttpServletResponse httpServletResponse,

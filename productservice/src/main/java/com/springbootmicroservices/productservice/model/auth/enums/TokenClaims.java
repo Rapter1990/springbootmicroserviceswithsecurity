@@ -3,6 +3,11 @@ package com.springbootmicroservices.productservice.model.auth.enums;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Enum representing various JWT token claims and their corresponding keys.
+ * This enum defines the standard claims used in JWT tokens along with their
+ * JSON keys, which are utilized for encoding and decoding JWT payloads.
+ */
 @Getter
 @RequiredArgsConstructor
 public enum TokenClaims {
