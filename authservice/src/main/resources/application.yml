@@ -4,6 +4,12 @@ spring:
 server:
   port: 1112
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761/eureka/}
+
+
 logging:
   level:
     org.springframework.security: DEBUG
