@@ -178,7 +178,7 @@
 - Integration Tests
 - Docker
 - Docker Compose
-- Github Actions
+- CI/CD (Github Actions)
 - Spring Cloud
 - Postman
 - Spring Security
@@ -250,3 +250,8 @@ $ mvn spring-boot:run
     <p> Figure 1 </p>
     <img src ="screenshots/spring_1.PNG">
 </details>
+
+
+### Contributors
+
+- [Sercan Noyan Germiyanoğlu](https://github.com/Rapter1990)
