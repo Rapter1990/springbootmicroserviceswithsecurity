@@ -2,6 +2,10 @@ package com.springbootmicroservices.userservice.model.user.dto.response;
 
 import lombok.*;
 
+/**
+ * Represents a response named {@link TokenResponse} containing tokens for authentication.
+ * This class includes the access token, its expiration time, and the refresh token.
+ */
 @Getter
 @Setter
 @Builder

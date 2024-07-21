@@ -2,6 +2,9 @@ package com.springbootmicroservices.userservice.exception;
 
 import java.io.Serial;
 
+/**
+ * Exception named {@link PasswordNotValidException} thrown when a password does not meet the required criteria.
+ */
 public class PasswordNotValidException extends RuntimeException {
 
     @Serial
@@ -11,10 +14,18 @@ public class PasswordNotValidException extends RuntimeException {
             Password is not valid!
             """;
 
+    /**
+     * Constructs a {@code PasswordNotValidException} with the default message.
+     */
     public PasswordNotValidException() {
         super(DEFAULT_MESSAGE);
     }
 
+    /**
+     * Constructs a {@code PasswordNotValidException} with a custom message.
+     *
+     * @param message the detail message
+     */
     public PasswordNotValidException(final String message) {
         super(DEFAULT_MESSAGE + " " + message);
     }

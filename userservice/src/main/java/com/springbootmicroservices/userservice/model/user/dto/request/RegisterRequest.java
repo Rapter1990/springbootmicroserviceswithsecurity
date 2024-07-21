@@ -5,6 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+/**
+ * Represents a request named {@link RegisterRequest} for user registration.
+ * This class contains the necessary details required to register a new user.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

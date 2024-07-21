@@ -11,9 +11,20 @@ import java.io.StringReader;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
+/**
+ * Utility class for converting PEM-encoded keys to {@link PublicKey} and {@link PrivateKey} objects.
+ * Provides methods to parse and convert PEM-encoded public and private key strings into their respective Java security key representations.
+ */
 @UtilityClass
 public class KeyConverter {
 
+    /**
+     * Converts a PEM-encoded public key string to a {@link PublicKey} object.
+     *
+     * @param publicPemKey the PEM-encoded public key string
+     * @return the corresponding {@link PublicKey} object
+     * @throws RuntimeException if an error occurs while reading or converting the key
+     */
     public PublicKey convertPublicKey(final String publicPemKey) {
 
         final StringReader keyReader = new StringReader(publicPemKey);
@@ -27,6 +38,13 @@ public class KeyConverter {
 
     }
 
+    /**
+     * Converts a PEM-encoded private key string to a {@link PrivateKey} object.
+     *
+     * @param privatePemKey the PEM-encoded private key string
+     * @return the corresponding {@link PrivateKey} object
+     * @throws RuntimeException if an error occurs while reading or converting the key
+     */
     public PrivateKey convertPrivateKey(final String privatePemKey) {
 
         StringReader keyReader = new StringReader(privatePemKey);

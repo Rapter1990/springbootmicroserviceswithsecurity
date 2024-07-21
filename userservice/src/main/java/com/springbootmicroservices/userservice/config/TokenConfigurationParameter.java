@@ -8,6 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
+/**
+ * Configuration class named {@link TokenConfigurationParameter} for token parameters.
+ * Provides access to token expiration settings and cryptographic keys.
+ */
 @Getter
 @Configuration
 public class TokenConfigurationParameter {
@@ -18,8 +22,6 @@ public class TokenConfigurationParameter {
     private final PrivateKey privateKey;
 
     public TokenConfigurationParameter() {
-
-        //this.issuer = ConfigurationParameter.ISSUER.getDefaultValue();
 
         this.accessTokenExpireMinute = Integer.parseInt(
                 ConfigurationParameter.AUTH_ACCESS_TOKEN_EXPIRE_MINUTE.getDefaultValue()

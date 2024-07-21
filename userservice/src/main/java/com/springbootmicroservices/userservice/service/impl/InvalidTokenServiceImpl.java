@@ -11,12 +11,20 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of {@link InvalidTokenService} for managing invalid tokens.
+ */
 @Service
 @RequiredArgsConstructor
 public class InvalidTokenServiceImpl implements InvalidTokenService {
 
     private final InvalidTokenRepository invalidTokenRepository;
 
+    /**
+     * Invalidates a set of tokens by saving them as invalid in the repository.
+     *
+     * @param tokenIds a set of token IDs to be invalidated.
+     */
     @Override
     public void invalidateTokens(Set<String> tokenIds) {
 
@@ -30,6 +38,12 @@ public class InvalidTokenServiceImpl implements InvalidTokenService {
         invalidTokenRepository.saveAll(enocaInvalidTokenEntities);
     }
 
+    /**
+     * Checks if a token has been invalidated by its ID.
+     *
+     * @param tokenId the token ID to check.
+     * @throws TokenAlreadyInvalidatedException if the token has already been invalidated.
+     */
     @Override
     public void checkForInvalidityOfToken(String tokenId) {
 

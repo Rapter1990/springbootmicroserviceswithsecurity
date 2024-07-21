@@ -3,6 +3,10 @@ package com.springbootmicroservices.userservice.model.user.enums;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Enum representing various configuration parameters used in the application.
+ * This enum includes parameters for authentication token expiration times and key values.
+ */
 @Getter
 @RequiredArgsConstructor
 public enum ConfigurationParameter {

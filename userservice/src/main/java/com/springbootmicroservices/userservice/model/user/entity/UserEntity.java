@@ -11,6 +11,10 @@ import lombok.experimental.SuperBuilder;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents a user entity named {@link UserEntity} in the system.
+ * This entity stores user-related information such as email, password, and personal details.
+ */
 @Getter
 @Setter
 @SuperBuilder
@@ -52,6 +56,11 @@ public class UserEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus = UserStatus.ACTIVE;
 
+    /**
+     * Constructs a map of claims based on the user's attributes.
+     * This map is typically used to create JWT claims for the user.
+     * @return a map of claims containing user attributes
+     */
     public Map<String, Object> getClaims() {
 
         final Map<String, Object> claims = new HashMap<>();

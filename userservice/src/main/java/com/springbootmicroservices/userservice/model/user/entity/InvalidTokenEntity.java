@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Represents an entity named {@link InvalidTokenEntity} for storing invalid tokens in the system.
+ * This entity tracks tokens that have been invalidated to prevent their reuse.
+ */
 @Entity
 @Getter
 @Setter

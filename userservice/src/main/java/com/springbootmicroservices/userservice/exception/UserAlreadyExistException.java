@@ -2,6 +2,9 @@ package com.springbootmicroservices.userservice.exception;
 
 import java.io.Serial;
 
+/**
+ * Exception named {@link UserAlreadyExistException} thrown when an attempt is made to register a user who already exists.
+ */
 public class UserAlreadyExistException extends RuntimeException {
 
     @Serial
@@ -11,10 +14,18 @@ public class UserAlreadyExistException extends RuntimeException {
             User already exist!
             """;
 
+    /**
+     * Constructs a {@code UserAlreadyExistException} with the default message.
+     */
     public UserAlreadyExistException() {
         super(DEFAULT_MESSAGE);
     }
 
+    /**
+     * Constructs a {@code UserAlreadyExistException} with a custom message.
+     *
+     * @param message the detail message
+     */
     public UserAlreadyExistException(final String message) {
         super(DEFAULT_MESSAGE + " " + message);
     }
