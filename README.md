@@ -1,7 +1,7 @@
 # Spring Boot Microservices with JWT Implementation
 
 <p align="center">
-    <img src="screenshots/spring_boot_security_example_jwt_implementation.png" alt="Main Information" width="700" height="500">
+    <img src="screenshots/spring_boot_microservices_jwt_implementation_main.png" alt="Main Information" width="700" height="500">
 </p>
 
 ### 📖 Information
@@ -248,7 +248,37 @@ $ mvn spring-boot:run
 <details>
 <summary>Click here to show the screenshots of project</summary>
     <p> Figure 1 </p>
-    <img src ="screenshots/spring_1.PNG">
+    <img src ="screenshots/eureka_server_image.PNG">
+    <p> Figure 2 </p>
+    <img src ="screenshots/docker_image.PNG">
+    <p> Figure 3 </p>
+    <img src ="screenshots/0_register_admin.PNG">
+    <p> Figure 4 </p>
+    <img src ="screenshots/0_login_admin.PNG">
+    <p> Figure 5 </p>
+    <img src ="screenshots/0_refresh_token_admin.PNG">
+    <p> Figure 6 </p>
+    <img src ="screenshots/0_logout_admin.PNG">
+    <p> Figure 7 </p>
+    <img src ="screenshots/2_register_user.PNG">
+    <p> Figure 8 </p>
+    <img src ="screenshots/2_login_user.PNG">
+    <p> Figure 9 </p>
+    <img src ="screenshots/2_refresh_token_user.PNG">
+    <p> Figure 10 </p>
+    <img src ="screenshots/2_logout_user.PNG">
+    <p> Figure 11 </p>
+    <img src ="screenshots/3_create_product_by_user.PNG">
+    <p> Figure 12 </p>
+    <img src ="screenshots/1_get_product_by_admin.PNG">
+    <p> Figure 13 </p>
+    <img src ="screenshots/3_get_product_by_user.PNG">
+    <p> Figure 14 </p>
+    <img src ="screenshots/3_get_products_by_user.PNG">
+    <p> Figure 15 </p>
+    <img src ="screenshots/3_update_product_by_admin.PNG">
+    <p> Figure 16 </p>
+    <img src ="screenshots/3_delete_product_by_admin.PNG">
 </details>
 
 
