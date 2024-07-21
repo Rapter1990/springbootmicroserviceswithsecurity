@@ -15,25 +15,50 @@ import reactor.core.scheduler.Schedulers;
 
 import java.util.List;
 
+/**
+ * A custom Gateway filter named {@link JwtAuthenticationFilter} that handles JWT authentication for requests.
+ * This filter validates JWT tokens for all requests except those to public endpoints.
+ */
 @Component
 @Slf4j
 public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAuthenticationFilter.Config> {
 
-
+    /**
+     * Configuration class for JwtAuthenticationFilter.
+     * It holds a list of public endpoints that should not be filtered.
+     */
     public static class Config {
         // List of public endpoints that should not be filtered
         private List<String> publicEndpoints;
 
+        /**
+         * Gets the list of public endpoints.
+         *
+         * @return the list of public endpoints
+         */
         public List<String> getPublicEndpoints() {
             return publicEndpoints;
         }
 
+        /**
+         * Sets the list of public endpoints.
+         *
+         * @param publicEndpoints the list of public endpoints to set
+         * @return the updated Config object
+         */
         public Config setPublicEndpoints(List<String> publicEndpoints) {
             this.publicEndpoints = publicEndpoints;
             return this;
         }
+
     }
 
+    /**
+     * Applies the JWT authentication filter to the gateway.
+     *
+     * @param config the configuration for the filter
+     * @return the gateway filter
+     */
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
